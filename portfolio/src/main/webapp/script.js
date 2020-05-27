@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 /**
  * Adds a random greeting to the page.
  */
+ 
 function addRandomGreeting() {
   const greetings =
       ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
@@ -49,4 +51,26 @@ function randomizeImage() {
   // Remove the previous image.
   imageContainer.innerHTML = '';
   imageContainer.appendChild(imgElement);
+
+  // Add Caption
+  var moments = [
+    "text1",
+    "text2",
+    "text3", 
+    "text4",
+    "text5",
+    "text6",
+    "text7",
+    "text8",
+    "text9",
+    "text10",
+    "text11",
+  ]
+  console.log(moments[imageIndex]);
+  const txtElement = document.createElement('p');
+  var txt = document.createTextNode(moments[imageIndex]);
+  txtElement.appendChild(txt);
+  const txtContainer = document.getElementById('random-caption-container');
+  txtContainer.innerHTML = '';
+  txtContainer.appendChild(txtElement);
 }
