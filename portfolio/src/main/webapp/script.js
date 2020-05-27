@@ -28,7 +28,25 @@ function addRandomGreeting() {
 }
 
 function addRandomQuote() {
-    // TODO store all possible quotes from excel file
+    // TODO store quotes in seperate JSON file
     const greetings =
       ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+
+}
+
+function randomizeImage() {
+  // The images directory contains 11 images, so generate a random index between
+  // 1 and 11.
+  const size = 11;
+  const imageIndex = Math.floor(Math.random() * size) + 1;
+  const imgUrl = 'images/grace-' + imageIndex + '.jpg';
+
+  const imgElement = document.createElement('img');
+  imgElement.src = imgUrl;
+  imgElement.width = '300';
+
+  const imageContainer = document.getElementById('random-image-container');
+  // Remove the previous image.
+  imageContainer.innerHTML = '';
+  imageContainer.appendChild(imgElement);
 }
