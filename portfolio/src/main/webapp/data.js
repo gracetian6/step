@@ -1,6 +1,7 @@
 // arrays store text that will be displayed on pages 
 // will figure out how to migrate this 
-var moments = [
+window.moments = [
+    "text0",
     "text1",
     "text2",
     "text3", 
@@ -11,5 +12,4 @@ var moments = [
     "text8",
     "text9",
     "text10",
-    "text11",
 ]

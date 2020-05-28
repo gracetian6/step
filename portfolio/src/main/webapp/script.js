@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// number of total images for moments.html  
+const img_total = 11;
 
 /**
  * Adds a random greeting to the page.
  */
- 
 function addRandomGreeting() {
   const greetings =
       ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
@@ -29,48 +30,44 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-function addRandomQuote() {
-    // TODO store quotes in seperate JSON file
+/**
+ * Adds a random quote to the page.
+ */
+ function addRandomQuote() {
+    // quotes will be stored in data.js
     const greetings =
       ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
 }
 
-function randomizeImage() {
-  // The images directory contains 11 images, so generate a random index between
-  // 1 and 11.
-  const size = 11;
-  const imageIndex = Math.floor(Math.random() * size) + 1;
-  const imgUrl = 'images/grace-' + imageIndex + '.jpg';
-
+/**
+ * Constructs random image for randomizeImage fn
+ */
+function constructImage(imageIndex){
+  const imgUrl = `images/grace-${imageIndex}.jpg`;
   const imgElement = document.createElement('img');
   imgElement.src = imgUrl;
   imgElement.width = '300';
+  return imgElement;
+}
 
+/**
+ * Adds a random image to the moments.html
+ */
+ function randomizeImage() {
   const imageContainer = document.getElementById('random-image-container');
   // Remove the previous image.
   imageContainer.innerHTML = '';
-  imageContainer.appendChild(imgElement);
+
+    // The images directory contains img_total images, so generate a random index between
+  // 0 and img_total-1.
+  const imageIndex = Math.floor(Math.random() * img_total);
+  const newImage = constructImage(imageIndex);
+  imageContainer.appendChild(newImage);
 
   // Add Caption
-  var moments = [
-    "text1",
-    "text2",
-    "text3", 
-    "text4",
-    "text5",
-    "text6",
-    "text7",
-    "text8",
-    "text9",
-    "text10",
-    "text11",
-  ]
-  console.log(moments[imageIndex]);
   const txtElement = document.createElement('p');
-  var txt = document.createTextNode(moments[imageIndex]);
-  txtElement.appendChild(txt);
+  txtElement.innerText = window.moments[imageIndex];
   const txtContainer = document.getElementById('random-caption-container');
   txtContainer.innerHTML = '';
   txtContainer.appendChild(txtElement);
-}
+} 
