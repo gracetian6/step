@@ -1,7 +1,8 @@
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  max-width: 800px;
+  text-align: center;
 }
 
 #greeting-container {
@@ -26,4 +27,79 @@
 
 #random-image-container img {
   margin-top: 20px;
+}
+
+#random-caption-container img {
+  max-width: 600px;
+}
+
+/* Google Fonts */
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
+@import url(https://fonts.googleapis.com/css?family=Lora);
+
+html{
+  min-height: 100%;
+  overflow: hidden;
+}
+
+body{
+  height: calc(100vh - 8em);
+  padding: 4em;
+  color: rgba(255,255,255,.75);
+  Font-Family: 'Anonymous Pro', Monospace;
+  Font-Size: 19px;
+  background-color: rgb(25,25,25);  
+}
+
+.line-1{
+    position: relative;
+    top: 50%;  
+    width: 24em;
+    margin: 0 auto;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-50%);    
+}
+
+h1{
+  Font-Family: 'Lora';
+  Font-Size: 52px;
+}
+
+/* Animation */
+.anim-typewriter{
+  animation: typewriter 4s steps(44) 1s 1 normal both,
+             blinkTextCursor 500ms steps(44) infinite normal;
+}
+@keyframes typewriter{
+  from{width: 0;}
+  to{width: 24em;}
+}
+@keyframes blinkTextCursor{
+  from{border-right-color: rgba(255,255,255,.75);}
+  to{border-right-color: transparent;}
+}
+
+/* Link box effect */
+:root {
+  --mainColor: #ff9800;
+}
+
+a {
+  background:
+     linear-gradient(
+       to bottom, var(--mainColor) 0%,
+       var(--mainColor) 100%
+     );
+    background-position: 0 100%;
+    background-repeat: repeat-x;
+    background-size: 4px 4px;
+  color: rgba(255,255,255,.75);
+  text-decoration: none;
+  transition: background-size .2s;
+}
+
+a:hover {
+  background-size: 4px 50px;
 }
