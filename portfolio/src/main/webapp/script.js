@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// number of total images for moments.html  
+const img_total = 11;
+
 /**
  * Adds a random greeting to the page.
  */
@@ -26,3 +29,45 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+/**
+ * Adds a random quote to the page.
+ */
+ function addRandomQuote() {
+    // quotes will be stored in data.js
+    const greetings =
+      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+}
+
+/**
+ * Constructs random image for randomizeImage fn
+ */
+function constructImage(imageIndex){
+  const imgUrl = `images/grace-${imageIndex}.jpg`;
+  const imgElement = document.createElement('img');
+  imgElement.src = imgUrl;
+  imgElement.width = '300';
+  return imgElement;
+}
+
+/**
+ * Adds a random image to the moments.html
+ */
+ function randomizeImage() {
+  const imageContainer = document.getElementById('random-image-container');
+  // Remove the previous image.
+  imageContainer.innerHTML = '';
+
+    // The images directory contains img_total images, so generate a random index between
+  // 0 and img_total-1.
+  const imageIndex = Math.floor(Math.random() * img_total);
+  const newImage = constructImage(imageIndex);
+  imageContainer.appendChild(newImage);
+
+  // Add Caption
+  const txtElement = document.createElement('p');
+  txtElement.innerText = window.moments[imageIndex];
+  const txtContainer = document.getElementById('random-caption-container');
+  txtContainer.innerHTML = '';
+  txtContainer.appendChild(txtElement);
+} 
