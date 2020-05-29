@@ -17,20 +17,20 @@
 
 .image-thumbnails img {
   margin: 10px;
-  max-height: 200px;
-  max-width: 200px;
+  max-height: 300px;
+  max-width: 300px;
 }
 
 .image-thumbnails img:hover {
   border: thick solid black;
 }
 
-#random-image-container img {
-  margin-top: 20px;
+#random-caption-container {
+  text-align: center;
+  padding: 15px;
 }
-
-#random-caption-container img {
-  max-width: 600px;
+#random-image-container {
+  padding: 15px;
 }
 
 /* Google Fonts */
