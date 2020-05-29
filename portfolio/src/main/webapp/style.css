@@ -27,9 +27,17 @@
 
 #random-caption-container {
   text-align: center;
-  padding: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
-#random-image-container {
+
+.row {
+  display: flex;
+}
+
+/* Create 2 equal columns that sits next to each other */
+.column {
+  flex: 50%;
   padding: 15px;
 }
 
@@ -48,7 +56,7 @@ body{
   color: rgba(255,255,255,.75);
   Font-Family: 'Anonymous Pro', Monospace;
   Font-Size: 19px;
-  background-color: rgb(25,25,25);  
+  background-color: #013220; 
 }
 
 .line-1{
