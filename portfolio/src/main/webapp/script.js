@@ -66,7 +66,7 @@ function constructImage(imageIndex){
 
   // Add Caption
   const txtElement = document.createElement('p');
-  txtElement.innerText = window.moments[imageIndex];
+  txtElement.innerText = window.moments[imageIndex]; 
   const txtContainer = document.getElementById('random-caption-container');
   txtContainer.innerHTML = '';
   txtContainer.appendChild(txtElement);

@@ -1,7 +1,8 @@
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  max-width: 800px;
+  text-align: center;
 }
 
 #greeting-container {
@@ -16,14 +17,96 @@
 
 .image-thumbnails img {
   margin: 10px;
-  max-height: 200px;
-  max-width: 200px;
+  max-height: 300px;
+  max-width: 300px;
 }
 
 .image-thumbnails img:hover {
   border: thick solid black;
 }
 
-#random-image-container img {
-  margin-top: 20px;
+#random-caption-container {
+  text-align: center;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.row {
+  display: flex;
+}
+
+/* Create 2 equal columns that sits next to each other */
+.column {
+  flex: 50%;
+  padding: 15px;
+}
+
+/* Google Fonts */
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
+@import url(https://fonts.googleapis.com/css?family=Lora);
+
+html {
+  min-height: 100%;
+  overflow: hidden;
+}
+
+body {
+  height: calc(100vh - 8em);
+  padding: 4em;
+  color: #f4f0f4;
+  font-family: 'Anonymous Pro', Monospace;
+  font-size: 16px;
+  background-color: #013220; 
+}
+
+.type-format {
+    position: relative;
+    top: 50%;  
+    width: 24em;
+    margin: 0 auto;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-50%);    
+}
+
+h1 {
+  font-family: 'Lora';
+}
+
+/* Animation */
+.typing {
+  animation: typewriter 4s steps(44) 1s 1 normal both,
+             blinkTextCursor 500ms steps(44) infinite normal;
+}
+@keyframes typewriter {
+  from{width: 0;}
+  to{width: 24em;}
+}
+@keyframes blinkTextCursor {
+  from{border-right-color: rgba(255,255,255,.75);}
+  to{border-right-color: transparent;}
+}
+
+/* Link box effect */
+:root {
+  --accentColor: #f46500;
+}
+
+a {
+  background:
+    linear-gradient(
+      to bottom, var(--accentColor) 0%,
+      var(--accentColor) 100%
+    );
+  background-position: 0 100%;
+  background-repeat: repeat-x;
+  background-size: 4px 4px;
+  color: rgba(255,255,255,.75);
+  text-decoration: none;
+  transition: background-size .2s;
+}
+
+a:hover {
+  background-size: 4px 50px;
 }
