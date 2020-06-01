@@ -53,7 +53,7 @@ html {
 body {
   height: calc(100vh - 8em);
   padding: 4em;
-  color: rgba(255,255,255,.75);
+  color: #f4f0f4;
   font-family: 'Anonymous Pro', Monospace;
   font-size: 16px;
   background-color: #013220; 
@@ -70,9 +70,8 @@ body {
     transform: translateY(-50%);    
 }
 
-h1{
+h1 {
   font-family: 'Lora';
-  font-size: 52px;
 }
 
 /* Animation */
@@ -91,7 +90,7 @@ h1{
 
 /* Link box effect */
 :root {
-  --accentColor: #ff9800;
+  --accentColor: #f46500;
 }
 
 a {

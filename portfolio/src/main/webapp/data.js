@@ -67,3 +67,18 @@ window.moments = [
     + `by starbucks, and I found the money shot right `
     + `here out in the streets. `,
 ]
+
+window.quotes = [
+  `I got expelled from school. My dad got fired from work. ` 
+  + `It was no big deal.`,
+
+  `The reason we tell people funny, interesting stories is `
+  + `we want the reward of them having that look on `
+  + `their face and being surprised and pleased about hearing `
+  + `something new.`,
+]
+
+window.speaker = [
+  `Park Saeroyi in Itaewon Class`,
+  `Malcom Gladwell in his Writing MasterClass`,
+]
