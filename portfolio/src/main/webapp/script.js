@@ -63,8 +63,12 @@ function constructImage(imageIndex){
   txtContainer.appendChild(txtElement);
 } 
 
+/**
+ * Fetches array list from the \data server and adds them to index.html
+ */
 async function fetchWordAsync() {
-  const response = await fetch('/data');
-  const word = await response.text();
-  document.getElementById('fetch-response').innerHTML = word;
+  fetch('/data').then(response => response.json()).then((data) => {
+    const response = document.getElementById('fetch-response');
+    response.innerHTML = data;
+  });
 }
