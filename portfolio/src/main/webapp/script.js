@@ -66,5 +66,5 @@ function constructImage(imageIndex){
 async function fetchWordAsync() {
   const response = await fetch('/data');
   const word = await response.text();
-  document.getElementById('fetch-response').innerText = word;
+  document.getElementById('fetch-response').innerHTML = word;
 }
