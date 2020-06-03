@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import com.google.gson.Gson;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -32,21 +33,8 @@ public class DataServlet extends HttpServlet {
     msgs.add("hello");
     msgs.add("there");
     msgs.add("world");
-    System.out.println(msgs);
-    String json = convertToJson(msgs);
-    System.out.println(msgs);
+    Gson gson = new Gson();
+    String json = gson.toJson(msgs);
     response.getWriter().println(json);
-  }
-
-  private String convertToJson(ArrayList<String> arr_list) {
-    String json = "[";
-    for (int i = 0; i < arr_list.size(); i++) {
-      json += '"' + arr_list.get(i) + '"';
-      if (i != arr_list.size() - 1) {
-        json += ", ";
-      }
-    }
-    json += "]";
-    return json;
   }
 }
