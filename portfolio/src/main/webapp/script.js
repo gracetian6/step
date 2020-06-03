@@ -31,15 +31,6 @@ function addRandomGreeting() {
 }
 
 /**
- * Adds a random quote to the page.
- */
- function addRandomQuote() {
-    // quotes will be stored in data.js
-    const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-}
-
-/**
  * Constructs random image for randomizeImage fn
  */
 function constructImage(imageIndex){
@@ -71,3 +62,13 @@ function constructImage(imageIndex){
   txtContainer.innerHTML = '';
   txtContainer.appendChild(txtElement);
 } 
+
+/**
+ * Fetches array list from the \data server and adds them to index.html
+ */
+async function fetchWordAsync() {
+  fetch('/data').then(response => response.json()).then((data) => {
+    const response = document.getElementById('fetch-response');
+    response.innerHTML = data;
+  });
+}
