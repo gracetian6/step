@@ -41,11 +41,7 @@ public class DataServlet extends HttpServlet {
       // Get the input from the form.
       String comment = request.getParameter("comment");
       msgs.add(comment);
-
-      // Respond with Result
       response.sendRedirect("/index.html;");
-      response.getWriter().println("<p>Comment: " + comment + "</p>");
-      // TODO return comments as a list on index.html 1:25
   }
 }
 
