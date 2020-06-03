@@ -66,9 +66,19 @@ function constructImage(imageIndex){
 /**
  * Fetches array list from the \data server and adds them to index.html
  */
-async function fetchWordAsync() {
-  fetch('/data').then(response => response.json()).then((data) => {
-    const response = document.getElementById('fetch-response');
-    response.innerHTML = data;
+function getComment() {
+  fetch('/data').then(response => response.json()).then((comment) => {
+    // Build the list of history entries.
+    const historyEl = document.getElementById('history');
+    comment.forEach((line) => {
+      historyEl.appendChild(createListElement(line));
+    });
   });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }

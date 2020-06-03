@@ -28,13 +28,24 @@ public class DataServlet extends HttpServlet {
   private final ArrayList<String> msgs = new ArrayList<String>();
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    msgs.add("hello");
-    msgs.add("there");
-    msgs.add("world");
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
     Gson gson = new Gson();
     String json = gson.toJson(msgs);
+    // Respond with the result
+    response.setContentType("text/html;");
     response.getWriter().println(json);
   }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      // Get the input from the form.
+      String comment = request.getParameter("comment");
+      msgs.add(comment);
+
+      // Respond with Result
+      response.sendRedirect("/index.html;");
+      response.getWriter().println("<p>Comment: " + comment + "</p>");
+      // TODO return comments as a list on index.html 1:25
+  }
 }
+
