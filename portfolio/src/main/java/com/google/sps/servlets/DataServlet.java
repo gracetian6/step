@@ -37,21 +37,25 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
-    
+
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
+    int count = 1;
     List<Comment> entries = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      long id = entity.getKey().getId();
-      String comment = (String) entity.getProperty("comment");
-      long timestamp = (long) entity.getProperty("timestamp");
+      if (count <= 5){
+        long id = entity.getKey().getId();
+        String comment = (String) entity.getProperty("comment");
+        long timestamp = (long) entity.getProperty("timestamp");
+        System.out.println(comment + " : " + count );
 
-      // Change w comment block
-      Comment entry = new Comment(id, comment, timestamp);
-      entries.add(entry);
+        Comment entry = new Comment(id, comment, timestamp);
+        entries.add(entry);
+      }
+      count++;
     }
-
+    
     Gson gson = new Gson();
     response.setContentType("application/json;");
     response.getWriter().println(gson.toJson(entries));
