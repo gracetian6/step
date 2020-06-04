@@ -21,7 +21,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
-import com.google.sps.data.Task;
+import com.google.sps.data.Comment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,22 +36,25 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
-    Query query = new Query("Task").addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
-    List<Task> tasks = new ArrayList<>();
+
+    List<Comment> entries = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
       long id = entity.getKey().getId();
       String comment = (String) entity.getProperty("comment");
       long timestamp = (long) entity.getProperty("timestamp");
 
       // Change w comment block
-      CommentBlock block = new CommentBlock(id, comment, timestamp);
-      tasks.add(block);
+      Comment entry = new Comment(id, comment, timestamp);
+      entries.add(entry);
     }
 
     Gson gson = new Gson();
-    response.setContentType("text/html;");
-    response.getWriter().println(gson.toJson(tasks));
+    response.setContentType("application/json;");
+    response.getWriter().println(gson.toJson(entries));
   }
 
   @Override
@@ -60,12 +63,12 @@ public class DataServlet extends HttpServlet {
     String comment = request.getParameter("comment");
     long timestamp = System.currentTimeMillis();
 
-    Entity taskEntity = new Entity("Task");
-    taskEntity.setProperty("comment", comment);
-    taskEntity.setProperty("timestamp", timestamp);
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("comment", comment);
+    commentEntity.setProperty("timestamp", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(taskEntity);
+    datastore.put(commentEntity);
 
     response.sendRedirect("/index.html");
   }
