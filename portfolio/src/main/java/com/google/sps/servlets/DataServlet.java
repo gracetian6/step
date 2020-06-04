@@ -44,8 +44,9 @@ public class DataServlet extends HttpServlet {
       String comment = (String) entity.getProperty("comment");
       long timestamp = (long) entity.getProperty("timestamp");
 
-      Task task = new Task(id, comment, timestamp);
-      tasks.add(task);
+      // Change w comment block
+      CommentBlock block = new CommentBlock(id, comment, timestamp);
+      tasks.add(block);
     }
 
     Gson gson = new Gson();
