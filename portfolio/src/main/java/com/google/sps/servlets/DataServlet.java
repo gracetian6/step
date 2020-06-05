@@ -29,6 +29,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.Integer;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -40,19 +41,20 @@ public class DataServlet extends HttpServlet {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
-
+    int numComments = Integer.parseInt(request.getParameter("numComments"));    
     int count = 1;
     List<Comment> entries = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      if (count <= 5){
-        long id = entity.getKey().getId();
-        String comment = (String) entity.getProperty("comment");
-        long timestamp = (long) entity.getProperty("timestamp");
-        System.out.println(comment + " : " + count );
-
-        Comment entry = new Comment(id, comment, timestamp);
-        entries.add(entry);
+      if (count > numComments){
+        break;
       }
+      long id = entity.getKey().getId();
+      String comment = (String) entity.getProperty("comment");
+      long timestamp = (long) entity.getProperty("timestamp");
+
+      Comment entry = new Comment(id, comment, timestamp);
+      entries.add(entry);
+
       count++;
     }
     
@@ -73,7 +75,6 @@ public class DataServlet extends HttpServlet {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
-
     response.sendRedirect("/index.html");
   }
 }

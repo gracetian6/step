@@ -52,7 +52,12 @@ function constructImage(imageIndex){
  * Fetches array list from the \data server and adds them to index.html
  */
 function getComment() {
-  fetch('/data').then(response => response.json()).then((comment) => {
+  // TODO read numComments 
+  console.log("javascript, number of comments:");
+  numComments = document.getElementById('limit').value
+  // does not read numComments correctly
+  console.log(numComments);
+  fetch(`/data?numComments=5`).then(response => response.json()).then((comment) => {
     // Build the list of history entries.
     const historyEl = document.getElementById('history');
     comment.forEach((line) => {
