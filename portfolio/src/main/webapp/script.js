@@ -56,7 +56,7 @@ function getMaxComment() {
 }
 
 /**
- * Fetches array list from the \data server and adds them to index.html
+ * Fetches comments from the \data server and adds them to index.html
  */
 function getComment() {
   const maxComment = getMaxComment();
@@ -71,6 +71,16 @@ function getComment() {
       historyEl.appendChild(createListElement(line.content));
     });
   });
+}
+
+function knit() {
+  // finding numComments will work once URL prints correctly
+  var url = new URL(document.URL);
+  console.log(url);
+  const numComments = url.searchParams.get("numComments");
+  console.log("knit");
+  console.log(numComments);
+  getComment();
 }
 
 /** Creates an <li> element containing text. */

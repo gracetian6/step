@@ -5,7 +5,7 @@
     <title>Grace's Website</title>
     <link rel="stylesheet" href="style.css">
   </head>
-  <body onload="getComment()">
+  <body onload="knit()">
     <div id="content">
       <h1>Grace Tian.</h1>
       <p>I'm a Noogler. An Ohioan. A Harvard sophomore.</p>
@@ -14,16 +14,17 @@
       <p>Learn more about my</p>
       <p class="type-format typing"><a href="moments.html">random moments.</a></p>
       <form action="/data" method="POST">
-        <p>Add comments here:</p>
-        <input type="text" name="comment" placeholder="Your Comment"/>
-        <br/><br/>
-        <input type="submit" />
+        <p>
+          Display this many comments:
+          <input onchange="getComment()" id="maxComments" type="number" name="Max Comments" max="15" size="4">
+        </p>
+        <p>
+          Add comments here:
+          <input type="text" name="comment" placeholder="Your Comment"/>
+          <br/><br/>
+          <input type="submit" />
+        </p>
       </form>
-      <ul id="history"></ul>
-      <p>
-        Display this many comments:
-        <input onchange="getComment()" id="maxComments" type="number" name="Max Comments" max="15" size="4">
-      </p>
       <ul id="history"></ul>
     </div>
     <script src="script.js"></script>

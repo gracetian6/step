@@ -67,7 +67,9 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
     String comment = request.getParameter("comment");
-    int numComments = Integer.parseInt(request.getParameter("numComments"));
+    // TODO: does not retrieve maxComments 
+    String numComments = request.getParameter("Max Comments");
+    System.out.println(numComments);
     long timestamp = System.currentTimeMillis();
 
     Entity commentEntity = new Entity("Comment");
@@ -77,7 +79,6 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
     response.sendRedirect("/index.html?numComments=" + numComments);
-    // how to get URL parameters from javascript
-    // javascript doesn't know to look for it 
+    // TODO redirects to ?numComments%20=%2010 instead of ?numComments=10
   }
 }
