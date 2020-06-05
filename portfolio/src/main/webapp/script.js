@@ -48,18 +48,25 @@ function constructImage(imageIndex){
   txtContainer.appendChild(txtElement);
 } 
 
+function getMaxComment() {
+  console.log("getMaxComment");
+  const numComments = document.getElementById('maxComments').value ;
+  console.log(numComments);
+  return numComments || 5; // return maxComment
+}
+
 /**
  * Fetches array list from the \data server and adds them to index.html
  */
 function getComment() {
-  // TODO read numComments 
-  console.log("javascript, number of comments:");
-  numComments = document.getElementById('limit').value
-  // does not read numComments correctly
-  console.log(numComments);
-  fetch(`/data?numComments=5`).then(response => response.json()).then((comment) => {
+  const maxComment = getMaxComment();
+  console.log("getComment:");
+  console.log(maxComment);
+  fetch(`/data?numComments=${maxComment}`).then(response => response.json()).then((comment) => {
     // Build the list of history entries.
     const historyEl = document.getElementById('history');
+    // clear html before I append stuff
+    historyEl.innerHTML = '';
     comment.forEach((line) => {
       historyEl.appendChild(createListElement(line.content));
     });
