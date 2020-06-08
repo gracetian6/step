@@ -42,10 +42,10 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     int numComments = Integer.parseInt(request.getParameter("numComments"));    
-    int count = 1;
+    int count = 0;
     List<Comment> entries = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
-      if (count > numComments){
+      if (count >= numComments){
         break;
       }
       long id = entity.getKey().getId();
@@ -69,7 +69,6 @@ public class DataServlet extends HttpServlet {
     String comment = request.getParameter("comment");
     // TODO: does not retrieve maxComments 
     String numComments = request.getParameter("Max Comments");
-    System.out.println(numComments);
     long timestamp = System.currentTimeMillis();
 
     Entity commentEntity = new Entity("Comment");
@@ -79,6 +78,5 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
     response.sendRedirect("/index.html?numComments=" + numComments);
-    // TODO redirects to ?numComments%20=%2010 instead of ?numComments=10
   }
 }

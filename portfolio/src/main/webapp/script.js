@@ -48,11 +48,12 @@ function constructImage(imageIndex){
   txtContainer.appendChild(txtElement);
 } 
 
+/*
+ * Extracts max comment from input, otherwise returns 5 
+ */
 function getMaxComment() {
-  console.log("getMaxComment");
-  const numComments = document.getElementById('maxComments').value ;
-  console.log(numComments);
-  return numComments || 5; // return maxComment
+  numComments = document.getElementById('maxComments').value ;
+  return numComments || 5; 
 }
 
 /**
@@ -60,27 +61,28 @@ function getMaxComment() {
  */
 function getComment() {
   const maxComment = getMaxComment();
-  console.log("getComment:");
-  console.log(maxComment);
   fetch(`/data?numComments=${maxComment}`).then(response => response.json()).then((comment) => {
     // Build the list of history entries.
-    const historyEl = document.getElementById('history');
-    // clear html before I append stuff
-    historyEl.innerHTML = '';
+    const commentBlock = document.getElementById('commentBlock');
+    // clear html before appending comments
+    commentBlock.innerHTML = '';
     comment.forEach((line) => {
-      historyEl.appendChild(createListElement(line.content));
+      commentBlock.appendChild(createListElement(line.content));
     });
   });
 }
 
+/*
+ * extracts numComment from URL and then displays comment
+ */
 function knit() {
-  // finding numComments will work once URL prints correctly
+  // extract numComment from URL 
   var url = new URL(document.URL);
-  console.log(url);
   const numComments = url.searchParams.get("numComments");
-  console.log("knit");
-  console.log(numComments);
-  // The issue is that I don't know how to pass down numComments above to getComment() function
+
+  // set input for maxComment
+  maxCommentInput = document.getElementById('maxComments');
+  maxCommentInput.value = numComments;
   getComment();
 }
 
