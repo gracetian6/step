@@ -78,7 +78,6 @@ public class DataServlet extends HttpServlet {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
-    response.sendRedirect("/index.html?numComments=" + numComments);
-    // TODO redirects to ?numComments%20=%2010 instead of ?numComments=10
+    response.sendRedirect("/index.html?numComments="+numComments);
   }
 }
