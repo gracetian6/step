@@ -51,16 +51,16 @@ function constructImage(imageIndex){
 /*
  * Extracts max comment from input, otherwise returns 5 
  */
-function getMaxComment() {
-  numComments = document.getElementById('maxComments').value ;
+function getMaxComments() {
+  numComments = document.getElementById('maxComments').value;
   return numComments || 5; 
 }
 
 /**
  * Fetches comments from the \data server and adds them to index.html
  */
-function getComment() {
-  const maxComment = getMaxComment();
+function getComments() {
+  const maxComment = getMaxComments();
   fetch(`/data?numComments=${maxComment}`).then(response => response.json()).then((comment) => {
     // Build the list of history entries.
     const commentBlock = document.getElementById('commentBlock');
@@ -75,15 +75,15 @@ function getComment() {
 /*
  * extracts numComment from URL and then displays comment
  */
-function knit() {
+function initComments() {
   // extract numComment from URL 
   var url = new URL(document.URL);
-  const numComments = url.searchParams.get("numComments");
+  const numComments = url.searchParams.get('numComments') || 5;
 
   // set input for maxComment
   maxCommentInput = document.getElementById('maxComments');
   maxCommentInput.value = numComments;
-  getComment();
+  getComments();
 }
 
 /** Creates an <li> element containing text. */
