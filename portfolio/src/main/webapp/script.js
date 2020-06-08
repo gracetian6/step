@@ -80,6 +80,7 @@ function knit() {
   const numComments = url.searchParams.get("numComments");
   console.log("knit");
   console.log(numComments);
+  // The issue is that I don't know how to pass down numComments above to getComment() function
   getComment();
 }
 
