@@ -16,21 +16,6 @@
 const img_total = 11;
 
 /**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
-}
-
-/**
  * Constructs random image for randomizeImage fn
  */
 function constructImage(imageIndex){
@@ -63,12 +48,47 @@ function constructImage(imageIndex){
   txtContainer.appendChild(txtElement);
 } 
 
-/**
- * Fetches array list from the \data server and adds them to index.html
+/*
+ * Extracts max comment from input, otherwise returns 5 
  */
-async function fetchWordAsync() {
-  fetch('/data').then(response => response.json()).then((data) => {
-    const response = document.getElementById('fetch-response');
-    response.innerHTML = data;
+function getMaxComments() {
+  numComments = document.getElementById('maxComments').value;
+  return numComments || 5; 
+}
+
+/**
+ * Fetches comments from the \data server and adds them to index.html
+ */
+function getComments() {
+  const maxComment = getMaxComments();
+  fetch(`/data?numComments=${maxComment}`).then(response => response.json()).then((comment) => {
+    // Build the list of history entries.
+    const commentBlock = document.getElementById('commentBlock');
+    // clear html before appending comments
+    commentBlock.innerHTML = '';
+    comment.forEach((line) => {
+      commentBlock.appendChild(createListElement(line.content));
+    });
   });
+}
+
+/*
+ * extracts numComment from URL and then displays comment
+ */
+function initComments() {
+  // extract numComment from URL 
+  var url = new URL(document.URL);
+  const numComments = url.searchParams.get('numComments') || 5;
+
+  // set input for maxComment
+  maxCommentInput = document.getElementById('maxComments');
+  maxCommentInput.value = numComments;
+  getComments();
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }

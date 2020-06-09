@@ -14,27 +14,69 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import com.google.gson.Gson;
+import java.lang.Integer;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private final ArrayList<String> msgs = new ArrayList<String>();
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    msgs.add("hello");
-    msgs.add("there");
-    msgs.add("world");
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+    int numComments = Integer.parseInt(request.getParameter("numComments"));    
+    int count = 0;
+    List<Comment> entries = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+      if (count >= numComments){
+        break;
+      }
+      long id = entity.getKey().getId();
+      String comment = (String) entity.getProperty("comment");
+      long timestamp = (long) entity.getProperty("timestamp");
+
+      Comment entry = new Comment(id, comment, timestamp);
+      entries.add(entry);
+
+      count++;
+    }
+    
     Gson gson = new Gson();
-    String json = gson.toJson(msgs);
-    response.getWriter().println(json);
+    response.setContentType("application/json;");
+    response.getWriter().println(gson.toJson(entries));
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String comment = request.getParameter("comment");
+    // TODO: does not retrieve maxComments 
+    String numComments = request.getParameter("Max Comments");
+    long timestamp = System.currentTimeMillis();
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("comment", comment);
+    commentEntity.setProperty("timestamp", timestamp);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+    response.sendRedirect("/index.html?numComments=" + numComments);
   }
 }

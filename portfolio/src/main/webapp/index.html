@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <title>Grace's Website</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="initComments()">
     <div id="content">
       <h1>Grace Tian.</h1>
       <p>I'm a Noogler. An Ohioan. A Harvard sophomore.</p>
@@ -14,8 +13,20 @@
       <p>I'm inspired by creative solutions and personal growth.</p>
       <p>Learn more about my</p>
       <p class="type-format typing"><a href="moments.html">random moments.</a></p>
-      <button onclick="fetchWordAsync()">Fetch from Server</button>
-      <div id="fetch-response"></div>
+      <form action="/data" method="POST">
+        <p>
+          Display this many comments:
+          <input onchange="getComments()" id="maxComments" type="number" name="Max Comments" max="15" size="4">
+        </p>
+        <p>
+          Add comments here:
+          <input type="text" name="comment" placeholder="Your Comment"/>
+          <br/><br/>
+          <input type="submit" />
+        </p>
+      </form>
+      <ul id="commentBlock"></ul>
     </div>
+    <script src="script.js"></script>
   </body>
 </html>
