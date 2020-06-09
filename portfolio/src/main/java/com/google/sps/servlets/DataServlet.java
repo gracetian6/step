@@ -68,7 +68,7 @@ public class DataServlet extends HttpServlet {
     // Get the input from the form.
     String comment = request.getParameter("comment");
     // TODO: does not retrieve maxComments 
-    String numComments = request.getParameter("Max Comments");
+    String numComments = request.getParameter("maxComments");
     long timestamp = System.currentTimeMillis();
 
     Entity commentEntity = new Entity("Comment");
