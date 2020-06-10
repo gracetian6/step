@@ -76,6 +76,9 @@ function getComments() {
  * extracts numComment from URL and then displays comment
  */
 function initComments() {
+  fetch(`/login`).then(response => response.json()).then((msg) => {
+    console.log(msg);
+  });
   // extract numComment from URL 
   var url = new URL(document.URL);
   const numComments = url.searchParams.get('numComments') || 5;
