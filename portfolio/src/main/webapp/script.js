@@ -62,6 +62,7 @@ function getMaxComments() {
 function getComments() {
   const maxComment = getMaxComments();
   fetch(`/data?numComments=${maxComment}`).then(response => response.json()).then((comment) => {
+    console.log(comment);
     // Build the list of history entries.
     const commentBlock = document.getElementById('commentBlock');
     // clear html before appending comments
@@ -76,6 +77,9 @@ function getComments() {
  * extracts numComment from URL and then displays comment
  */
 function initComments() {
+  fetch(`/login`).then(response => response.json).then((msg) => {
+    console.log(msg);
+  });
   // extract numComment from URL 
   var url = new URL(document.URL);
   const numComments = url.searchParams.get('numComments') || 5;
