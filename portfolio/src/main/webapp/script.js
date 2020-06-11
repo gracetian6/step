@@ -77,9 +77,11 @@ function getComments() {
  */
 function initComments() {
   fetch(`/loginStatus`).then(response => response.json()).then((msg) => {
+    console.log(msg);
     if (msg.loginStatus == false) {
       document.getElementById("commentForm").style.display="none";
     } else {
+      document.getElementById("loginLink").innerHTML= `<a href="login">Logout here</a> to hide comments:`;
       document.getElementById("commentForm").style.display="block";
       // extract numComment from URL 
       var url = new URL(document.URL);
