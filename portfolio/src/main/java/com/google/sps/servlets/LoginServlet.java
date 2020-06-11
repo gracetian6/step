@@ -43,6 +43,5 @@ public class LoginServlet extends HttpServlet {
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
       response.sendRedirect(loginUrl);
     }
-    
   }
 }

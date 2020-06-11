@@ -36,7 +36,5 @@ public class LoginStatusServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
     User user = new User(userService.isUserLoggedIn());
     response.getWriter().println(gson.toJson(user));
-  
-    
   }
 }
