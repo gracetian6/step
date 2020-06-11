@@ -76,17 +76,23 @@ function getComments() {
  * extracts numComment from URL and then displays comment
  */
 function initComments() {
-  fetch(`/login`).then(response => response.json()).then((msg) => {
+  fetch(`/loginStatus`).then(response => response.json()).then((msg) => {
     console.log(msg);
-  });
-  // extract numComment from URL 
-  var url = new URL(document.URL);
-  const numComments = url.searchParams.get('numComments') || 5;
 
-  // set input for maxComment
-  maxCommentInput = document.getElementById('maxComments');
-  maxCommentInput.value = numComments;
-  getComments();
+    if (msg.loginStatus == false) {
+      document.getElementById("commentForm").style.display="none";
+    } else {
+      document.getElementById("commentForm").style.display="block";
+      // extract numComment from URL 
+      var url = new URL(document.URL);
+      const numComments = url.searchParams.get('numComments') || 5;
+
+      // set input for maxComment
+      maxCommentInput = document.getElementById('maxComments');
+      maxCommentInput.value = numComments;
+      getComments();
+    }
+  });
 }
 
 /** Creates an <li> element containing text. */
