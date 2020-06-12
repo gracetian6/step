@@ -1,6 +1,6 @@
 package com.google.sps.data;
 
-/** An item on a todo list. */
+/** contains user account info. */
 public final class User {
 
   private final boolean loginStatus;
