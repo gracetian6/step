@@ -48,7 +48,7 @@ function constructImage(imageIndex){
   txtContainer.appendChild(txtElement);
 } 
 
-/*
+/**
  * Extracts max comment from input, otherwise returns 5 
  */
 function getMaxComments() {
@@ -72,19 +72,19 @@ function getComments() {
   });
 }
 
-/*
+/**
  * initializes comments on body load
  * hides comments if user not logged in, otherwise 
  * extracts numComment from URL and then displays comment
  */
 function initComments() {
   fetch(`/loginStatus`).then(response => response.json()).then((msg) => {
-    if (msg.loginStatus == false) {
-      document.getElementById("commentForm").style.display="none";
+    if (msg.loginStatus === false) {
+      document.getElementById("commentForm").style.display = "none";
     } else {
-      document.getElementById("loginLink").innerHTML= 
+      document.getElementById("loginLink").innerHTML = 
         `<a href="login">Logout here</a> to hide comments:`;
-      document.getElementById("commentForm").style.display="block";
+      document.getElementById("commentForm").style.display = "block";
       // extract numComment from URL 
       var url = new URL(document.URL);
       const numComments = url.searchParams.get('numComments') || 5;
