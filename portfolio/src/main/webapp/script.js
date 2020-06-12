@@ -61,7 +61,7 @@ function getMaxComments() {
  */
 function getComments() {
   const maxComment = getMaxComments();
-  fetch(`/data?numComments=${maxComment}`).then(response => response.json()).then((comment) => {
+  fetch(`/comment?numComments=${maxComment}`).then(response => response.json()).then((comment) => {
     // Build the list of history entries.
     const commentBlock = document.getElementById('commentBlock');
     // clear html before appending comments
