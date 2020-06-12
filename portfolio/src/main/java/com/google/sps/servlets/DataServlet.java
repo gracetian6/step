@@ -30,8 +30,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.Integer;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet handles comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
@@ -42,8 +44,9 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     int numComments = Integer.parseInt(request.getParameter("numComments"));    
-    int count = 0;
     List<Comment> entries = new ArrayList<>();
+    UserService userService = UserServiceFactory.getUserService();
+    int count = 0;
     for (Entity entity : results.asIterable()) {
       if (count >= numComments){
         break;
@@ -51,8 +54,9 @@ public class DataServlet extends HttpServlet {
       long id = entity.getKey().getId();
       String comment = (String) entity.getProperty("comment");
       long timestamp = (long) entity.getProperty("timestamp");
+      String email = userService.getCurrentUser().getEmail();
 
-      Comment entry = new Comment(id, comment, timestamp);
+      Comment entry = new Comment(id, comment, timestamp, email);
       entries.add(entry);
 
       count++;

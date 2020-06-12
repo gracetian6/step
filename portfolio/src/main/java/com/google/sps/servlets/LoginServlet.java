@@ -41,10 +41,8 @@ public class LoginServlet extends HttpServlet {
     response.getWriter().println(gson.toJson(userList));
 
     if (userService.isUserLoggedIn()) {
-      String userEmail = userService.getCurrentUser().getEmail();
       String urlToRedirectToAfterUserLogsOut = "/";
       String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
-
       response.sendRedirect(logoutUrl);
     } else {
       String urlToRedirectToAfterUserLogsIn = "/";
