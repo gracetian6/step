@@ -22,24 +22,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.sps.data.User;
+import com.google.gson.Gson;
 
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+
+@WebServlet("/loginStatus")
+public class LoginStatusServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html");
-    UserService userService = UserServiceFactory.getUserService();  
+    response.setContentType("application/json");
 
-
-    if (userService.isUserLoggedIn()) {
-      String urlToRedirectToAfterUserLogsOut = "/";
-      String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
-      response.sendRedirect(logoutUrl);
-    } else {
-      String urlToRedirectToAfterUserLogsIn = "/";
-      String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
-      response.sendRedirect(loginUrl);
-    }
+    Gson gson = new Gson();
+    UserService userService = UserServiceFactory.getUserService();
+    User user = new User(userService.isUserLoggedIn());
+    response.getWriter().println(gson.toJson(user));
   }
 }

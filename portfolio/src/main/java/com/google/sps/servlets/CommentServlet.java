@@ -33,9 +33,10 @@ import java.lang.Integer;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-/** Servlet handles comments data */
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {
+
+/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+@WebServlet("/comment")
+public class CommentServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {    
@@ -61,7 +62,6 @@ public class DataServlet extends HttpServlet {
 
       count++;
     }
-    
     Gson gson = new Gson();
     response.setContentType("application/json;");
     response.getWriter().println(gson.toJson(entries));
