@@ -62,13 +62,12 @@ function getMaxComments() {
 function getComments() {
   const maxComment = getMaxComments();
   fetch(`/comment?numComments=${maxComment}`).then(response => response.json()).then((comment) => {
-    console.log(comment);
     // Build the list of history entries.
     const commentBlock = document.getElementById('commentBlock');
     // clear html before appending comments
     commentBlock.innerHTML = '';
     comment.forEach((line) => {
-      commentBlock.appendChild(createListElement(line.content));
+      commentBlock.appendChild(createListElement(line.email + ": " + line.content));
     });
   });
 }

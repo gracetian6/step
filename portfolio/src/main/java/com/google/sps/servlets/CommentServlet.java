@@ -34,7 +34,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet handles comments data */
 @WebServlet("/comment")
 public class CommentServlet extends HttpServlet {
 
