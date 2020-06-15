@@ -102,3 +102,9 @@ function createListElement(text) {
   liElement.innerText = text;
   return liElement;
 }
+
+/**
+ */
+ function deleteComment(){
+   console.log("comment deleted");
+ }

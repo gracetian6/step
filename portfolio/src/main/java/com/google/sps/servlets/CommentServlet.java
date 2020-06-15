@@ -33,7 +33,6 @@ import java.lang.Integer;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-
 /** Servlet handles comments data */
 @WebServlet("/comment")
 public class CommentServlet extends HttpServlet {
