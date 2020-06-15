@@ -1,6 +1,5 @@
 package com.google.sps.data;
 
-
 /** contains user account info. */
 public final class User {
 
