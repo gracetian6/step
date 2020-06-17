@@ -14,18 +14,33 @@
 
 package com.google.sps;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    // find [times] of all required attendees
+
+    // find conflicts of all required attendees
+    Collection<TimeRange> conflicts = new ArrayList<>();
+    int num_attendees = request.getAttendees().size(); //check pseudo code 
+    for (Event event : events) {
+      for (int j = 0; j < num_attendees; j++) {
+        if (event == request.getAttendees()[j]){
+          conflicts.add(event.getWhen());
+        }
+      }
+    }
+
 
     // sort events in O(nlogn) time
-    Collections.sort(times, TimeRange.ORDER_BY_START);
+    Collections.sort(conflicts, TimeRange.ORDER_BY_START);
 
     // modify events so that all events are disjoint
 
     //find intervals between all disjoint events 
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+
+    //throw new UnsupportedOperationException("TODO: Implement this method.");
   }
 }
