@@ -18,6 +18,14 @@ import java.util.Collection;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
+    // find [times] of all required attendees
+
+    // sort events in O(nlogn) time
+    Collections.sort(times, TimeRange.ORDER_BY_START);
+
+    // modify events so that all events are disjoint
+
+    //find intervals between all disjoint events 
     throw new UnsupportedOperationException("TODO: Implement this method.");
   }
 }
