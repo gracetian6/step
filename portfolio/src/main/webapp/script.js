@@ -67,7 +67,7 @@ function getComments() {
     // clear html before appending comments
     commentBlock.innerHTML = '';
     comment.forEach((line) => {
-      commentBlock.appendChild(createListElement(line.content));
+      commentBlock.appendChild(createListElement(line.email + ": " + line.content));
     });
   });
 }
@@ -88,7 +88,6 @@ function initComments() {
       // extract numComment from URL 
       var url = new URL(document.URL);
       const numComments = url.searchParams.get('numComments') || 5;
-
       // set input for maxComment
       maxCommentInput = document.getElementById('maxComments');
       maxCommentInput.value = numComments;

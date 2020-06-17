@@ -33,7 +33,7 @@ import java.lang.Integer;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet handles comments data */
 @WebServlet("/comment")
 public class CommentServlet extends HttpServlet {
 
@@ -44,10 +44,9 @@ public class CommentServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     int numComments = Integer.parseInt(request.getParameter("numComments"));    
-    int count = 0;
     List<Comment> entries = new ArrayList<>();
-
-    UserService userService = UserServiceFactory.getUserService();  
+    UserService userService = UserServiceFactory.getUserService();
+    int count = 0;
     for (Entity entity : results.asIterable()) {
       if (count >= numComments){
         break;
@@ -71,8 +70,7 @@ public class CommentServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
     String comment = request.getParameter("comment");
-    // TODO: does not retrieve maxComments 
-    String numComments = request.getParameter("Max Comments");
+    String numComments = request.getParameter("maxComments");
     long timestamp = System.currentTimeMillis();
 
     Entity commentEntity = new Entity("Comment");
