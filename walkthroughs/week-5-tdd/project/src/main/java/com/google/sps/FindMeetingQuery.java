@@ -72,7 +72,7 @@ public final class FindMeetingQuery {
     }
 
     TimeRange interval;
-    // add events between disjoint conflicts
+    // add events between disjoint conflicts to free
     for (int i = 0; i <= conflicts.size(); i++) {
       // before first conflict
       if (i == 0) {
