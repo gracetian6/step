@@ -35,41 +35,63 @@ public final class FindMeetingQuery {
     }
 
 
-    System.out.println("PRINTING COLLECTIONS: ");
-    System.out.println(Arrays.toString(conflicts.toArray()));
-
     // sort events in O(nlogn) time
     Collections.sort(conflicts, TimeRange.ORDER_BY_START);
 
-    // modify events so that all events are disjoint
-    for (TimeRange conflict1 : conflicts) {
-      for (TimeRange conflict2 : conflicts) {
-        // pop first and then get end of next one that overlaps -- 
-        // keeping going until no more overlap
-      }
-    }
 
     //find intervals between events 
       // pop next item 
       // keep searching until next event doesn't overlap
-    num_conflicts = conflicts.size(); // check 
+    int num_conflicts = conflicts.size(); // check 
+
+    if (num_conflicts == 0) {
+      free.add(TimeRange.WHOLE_DAY);
+      return free;
+    }
+
     int start = 0;
+    TimeRange start_interval;
+    TimeRange end_interval;
+    TimeRange interval;
+
+
     while (start < num_conflicts){
-      
-      bolean overlap = 
+      start_interval = conflicts.get(start);
+
+      // add interval before start
+      if (start == 0) {
+        interval = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, start_interval.start(), false);
+        if (request.getDuration() <= interval.duration()) {
+          free.add(interval);
+        }
+      }
       // keep searching until next event doesn't overlap
       for (int end = start + 1; end < num_conflicts; end++) {
+        end_interval = conflicts.get(end);
         // if conflicts.get(end) doesn't overlap with conflicts.get(start):
+        if (!end_interval.overlaps(start_interval)){
           // then add the interval of conflicts.get(end-1).end and conflicts.get(end).start
+          interval = TimeRange.fromStartEnd(conflicts.get(end-1).end(), end_interval.start(), false); // change bool later
+          if (request.getDuration() <= interval.duration()) {
+            free.add(interval);
+          }
           // and reset
-            // start = end
-      }
-      
-
+          start = end;
+        }
+      }      
+      start++;
     } 
+    
 
-    //throw new UnsupportedOperationException("TODO: Implement this method.");
+    // add last interval 
+    interval = TimeRange.fromStartEnd(conflicts.get(num_conflicts - 1).end(), TimeRange.END_OF_DAY + 1, false);
+    if (request.getDuration() <= interval.duration()) {
+      free.add(interval);
+    } 
+    
 
-    return conflicts;
+    System.out.println("PRINTING RESULT: ");
+    System.out.println(Arrays.toString(free.toArray()));
+    return free;
   }
 }
