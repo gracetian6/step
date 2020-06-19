@@ -38,12 +38,10 @@ public final class FindMeetingQuery {
     // sort events in O(nlogn) time
     Collections.sort(conflicts, TimeRange.ORDER_BY_START);
 
-
-    //find intervals between events 
-      // pop next item 
-      // keep searching until next event doesn't overlap
-    int num_conflicts = conflicts.size(); // check 
-
+    if (request.getDuration() > TimeRange.WHOLE_DAY.duration()){
+      return free;
+    }
+    int num_conflicts = conflicts.size(); 
     if (num_conflicts == 0) {
       free.add(TimeRange.WHOLE_DAY);
       return free;
@@ -54,7 +52,7 @@ public final class FindMeetingQuery {
     TimeRange end_interval;
     TimeRange interval;
 
-
+    // find intervals between conflicts 
     while (start < num_conflicts){
       start_interval = conflicts.get(start);
 
