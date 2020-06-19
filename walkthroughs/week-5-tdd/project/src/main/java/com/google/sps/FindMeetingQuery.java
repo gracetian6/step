@@ -47,46 +47,50 @@ public final class FindMeetingQuery {
       return free;
     }
 
-    int start = 0;
+    int start = 0; int end;
     TimeRange start_interval;
     TimeRange end_interval;
     TimeRange interval;
 
-    // find intervals between conflicts 
-    while (start < num_conflicts){
+    // make events in conflicts disjoint
+    while (start < conflicts.size()) {
       start_interval = conflicts.get(start);
-
-      // add interval before start
-      if (start == 0) {
-        interval = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, start_interval.start(), false);
-        if (request.getDuration() <= interval.duration()) {
-          free.add(interval);
+      end = start + 1;
+      while (end < conflicts.size()){
+        end_interval = conflicts.get(end);
+        if (start_interval.contains(end_interval)) {
+          conflicts.remove(end);
+        }
+        else if (start_interval.overlaps(end_interval)){
+          start_interval = TimeRange.fromStartEnd(start_interval.start(), end_interval.end());
+          conflicts.remove(end);
+        }
+        else {
+          end++;
         }
       }
-      // keep searching until next event doesn't overlap
-      for (int end = start + 1; end < num_conflicts; end++) {
-        end_interval = conflicts.get(end);
-        // if conflicts.get(end) doesn't overlap with conflicts.get(start):
-        if (!end_interval.overlaps(start_interval)){
-          // then add the interval of conflicts.get(end-1).end and conflicts.get(end).start
-          interval = TimeRange.fromStartEnd(conflicts.get(end-1).end(), end_interval.start(), false); // change bool later
-          if (request.getDuration() <= interval.duration()) {
-            free.add(interval);
-          }
-          // and reset
-          start = end;
-        }
-      }      
-      start++;
-    } 
-    
+      start = end;
+    }
 
-    // add last interval 
-    interval = TimeRange.fromStartEnd(conflicts.get(num_conflicts - 1).end(), TimeRange.END_OF_DAY + 1, false);
-    if (request.getDuration() <= interval.duration()) {
-      free.add(interval);
-    } 
-    
+    // add events between disjoint conflicts
+    for (int i = 0; i < num_conflicts(); i++) {
+      if (i == 0) {
+        start = TimeRange.START_OF_DAY;
+        end = conflicts.get(i).start();
+      }
+      else if (i == num_conflicts() - 1){
+        start = conflicts.get(i).end();
+        end = TimeRange.END_OF_DAY;
+      }
+      else {
+        start = conflict.get(i).end();
+        end = conflict.get(i+1).start();
+      }
+      interval = TimeRange.fromStartEnd(start, end, false);
+      if (request.getDuration() <= interval.duration()) {
+        free.add(interval);
+      }
+    }
 
     System.out.println("PRINTING RESULT: ");
     System.out.println(Arrays.toString(free.toArray()));
