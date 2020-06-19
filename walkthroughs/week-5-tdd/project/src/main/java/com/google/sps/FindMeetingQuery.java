@@ -27,6 +27,7 @@ public final class FindMeetingQuery {
     // will store available times 
     ArrayList<TimeRange> free = new ArrayList<>();
 
+    // find conflicts of required attendees
     for (Event event : events) {
       for (String attendee : request.getAttendees()) {
         if (event.getAttendees().contains(attendee)) {
@@ -37,6 +38,7 @@ public final class FindMeetingQuery {
 
     Collections.sort(conflicts, TimeRange.ORDER_BY_START);
 
+    // handle edge cases 
     if (request.getDuration() > TimeRange.WHOLE_DAY.duration()){
       return free;
     }
