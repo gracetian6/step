@@ -73,12 +73,12 @@ public final class FindMeetingQuery {
     }
 
     // add events between disjoint conflicts
-    for (int i = 0; i < num_conflicts(); i++) {
+    for (int i = 0; i < conflicts.size(); i++) {
       if (i == 0) {
         start = TimeRange.START_OF_DAY;
         end = conflicts.get(i).start();
       }
-      else if (i == num_conflicts() - 1){
+      else if (i == conflicts.size() - 1){
         start = conflicts.get(i).end();
         end = TimeRange.END_OF_DAY;
       }
