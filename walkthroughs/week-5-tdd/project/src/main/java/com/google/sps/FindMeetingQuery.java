@@ -22,8 +22,9 @@ import java.util.Collections;
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     
-    // find conflicts of all required attendees
+    // stores conflicts of all required attendees
     ArrayList<TimeRange> conflicts = new ArrayList<>();
+    // will store available times 
     ArrayList<TimeRange> free = new ArrayList<>();
 
     for (Event event : events) {
@@ -34,8 +35,6 @@ public final class FindMeetingQuery {
       }
     }
 
-
-    // sort events in O(nlogn) time
     Collections.sort(conflicts, TimeRange.ORDER_BY_START);
 
     if (request.getDuration() > TimeRange.WHOLE_DAY.duration()){
@@ -50,7 +49,6 @@ public final class FindMeetingQuery {
     int start = 0; int end;
     TimeRange start_interval;
     TimeRange end_interval;
-    TimeRange interval;
 
     // make events in conflicts disjoint
     while (start < conflicts.size()) {
@@ -62,7 +60,8 @@ public final class FindMeetingQuery {
           conflicts.remove(end);
         }
         else if (start_interval.overlaps(end_interval)){
-          start_interval = TimeRange.fromStartEnd(start_interval.start(), end_interval.end());
+          start_interval = TimeRange.fromStartEnd(start_interval.start(), end_interval.end(), false);
+          conflicts.set(start, start_interval);
           conflicts.remove(end);
         }
         else {
@@ -72,28 +71,31 @@ public final class FindMeetingQuery {
       start = end;
     }
 
+    TimeRange interval;
     // add events between disjoint conflicts
-    for (int i = 0; i < conflicts.size(); i++) {
+    for (int i = 0; i <= conflicts.size(); i++) {
+      // before first conflict
       if (i == 0) {
         start = TimeRange.START_OF_DAY;
         end = conflicts.get(i).start();
       }
-      else if (i == conflicts.size() - 1){
-        start = conflicts.get(i).end();
-        end = TimeRange.END_OF_DAY;
+      // after last conflict 
+      else if (i == conflicts.size()) {
+        System.out.println(" adding last interval ");
+        start = conflicts.get(i-1).end();
+        end = TimeRange.END_OF_DAY + 1;
       }
+      // inbetween conflicts 
       else {
-        start = conflict.get(i).end();
-        end = conflict.get(i+1).start();
+        start = conflicts.get(i-1).end();
+        end = conflicts.get(i).start();
       }
       interval = TimeRange.fromStartEnd(start, end, false);
       if (request.getDuration() <= interval.duration()) {
         free.add(interval);
       }
     }
-
-    System.out.println("PRINTING RESULT: ");
-    System.out.println(Arrays.toString(free.toArray()));
+  
     return free;
   }
 }
